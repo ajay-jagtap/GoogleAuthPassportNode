@@ -4,7 +4,10 @@ const app = express()
 const passport = require('passport');
 const cookieSession = require('cookie-session')
 require('./passport-setup');
+var path = require('path');
 
+
+app.use(express.static('public'));
 
 // For an actual app you should configure this with an experation time, better keys, proxy and secure
 app.use(cookieSession({
@@ -55,4 +58,7 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 })
 
-app.listen(5000, () => console.log(`Example app listening on port ${5000}!`))
+//code for importing static files
+app.use(express.static(path.join(__dirname, 'public')));
+var currentPort = app.listen(process.env.PORT || 3000);
+console.log("Server started at PORT " + currentPort);
